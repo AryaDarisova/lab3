@@ -1,6 +1,11 @@
 package humanResources;
 
+//todo УБЕРИ СРАНЫЙ pred!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 public class Project implements EmployeeGroup{
+
+    //todo вынеси повторяющиеся действия с нодами в приватные методы
+    //private add(node), getNode(index i), removeNode(index i)
+    //
     private String name;
     private int size;
     private Node head;
@@ -24,6 +29,8 @@ public class Project implements EmployeeGroup{
             size++;
         }
     }
+
+
 
     @Override
     public void add(Employee employee) {

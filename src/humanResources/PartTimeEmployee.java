@@ -32,7 +32,8 @@ public class PartTimeEmployee extends Employee {
     @Override
     public String toString(){
         //“<secondName> <firstName>, <jobTitle> (внешний совместитель), <salary>р.”
-        StringBuilder line = new StringBuilder();
+        StringBuilder line = getString();
+        //todo в полученный Билдер вставить строку про совместителя
         if (getSecondName() != null && !getSecondName().isEmpty() && getFirstName() != null && !getFirstName().isEmpty()) {
             line.append(getSecondName()).append(" ").append(getFirstName()).append(", ");
         }
@@ -45,11 +46,13 @@ public class PartTimeEmployee extends Employee {
         return line.toString();
     }
 
+    //todo в таком переопределении нет смысла, нужно просто удалить
     @Override
     public boolean equals(Object obj){
         return super.equals(obj);
     }
 
+    //todo вызывай реализацию суперкласса, там уже вычисляется хэн на основе части полей
     @Override
     public int hashCode(){
         return super.hashCode()^getFirstName().hashCode()^getSecondName().hashCode()^getJobTitle().hashCode()^getSalary();

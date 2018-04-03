@@ -1,5 +1,6 @@
 package humanResources;
 
+//todo УБЕРИ СРАНЫЙ pred!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 public class ProjectManager implements GroupsManager{
     private ProjectsNode head;
     private ProjectsNode tail;
@@ -113,7 +114,7 @@ public class ProjectManager implements GroupsManager{
 
     @Override
     public EmployeeGroup[] getEmployeeGroups() {
-        EmployeeGroup[] getGroups = new Project[size];
+        EmployeeGroup[] getGroups = new EmployeeGroup[size];
         ProjectsNode node = head;
         for (int i = 0; i < size; i++) {
             getGroups[i] = node.value;
@@ -149,6 +150,7 @@ public class ProjectManager implements GroupsManager{
     /*
     - возвращающий количество сотрудников, занимающих заданную должность (должность передается в качестве параметра).
      */
+    //todo аналогично реализации в департаменте
 
     @Override
     public int employeesQuantity(JobTitlesEnum jobTitle) {
@@ -186,6 +188,7 @@ public class ProjectManager implements GroupsManager{
     - возвращающий ссылку на группу к которой относится сотрудник. Имя и фамилия сотрудника передается в качестве параметра.
      */
 
+    //todo аналогично реализации в департаменте
     @Override
     public EmployeeGroup getEmployeesGroup(String firstName, String secondName) {
         ProjectsNode node = head;

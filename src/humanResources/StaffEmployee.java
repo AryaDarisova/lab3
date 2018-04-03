@@ -1,6 +1,8 @@
 package humanResources;
 
 public class StaffEmployee extends Employee implements BusinessTraveller{
+
+    //todo делай либо приватные методы работы с нодами, которые будут использоваться в публичных методах, либо выноси список в отдельный класс, со своими методами
     private int bonus;
     private ListNode head;
     private int travelsQuantity;
@@ -110,6 +112,7 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
         }
     }
 
+    //todo используй getString() и добавляешь только командировки
     @Override
     public String toString() {
         //“<secondName> <firstName>, <jobTitle>, <salary>р., <bonus>р.
@@ -133,8 +136,13 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
         return line.toString();
     }
 
+
     @Override
     public boolean equals(Object obj)  {
+        //todo вся логика проверки до цикла есть в реализации суперкласса
+        if (super.equals(obj)) {
+            //теперь тут цикл
+        }
         if (this == obj)
             return true;
         if(obj == null && !this.getClass().equals(obj.getClass()))
@@ -149,6 +157,7 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
         return (travelsQuantity == temp.travelsQuantity);
     }
 
+    //todo вызывай super/hashcode() тоже
     @Override
     public int hashCode() {
         int hash = 0;

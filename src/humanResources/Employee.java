@@ -74,6 +74,7 @@ public abstract class Employee {
 
     public abstract void setBonus(int bonus);
 
+    //todo наоборот, toString вызывает getString()
     @Override
     public String toString(){
         //“<secondName> <firstName>, <jobTitle>, <salary>р.”
@@ -90,6 +91,7 @@ public abstract class Employee {
         return line.toString();
     }
 
+    //todo замени этот piece of shit! Тут реализуется логика формирования строки, и сформированный билдер возвращается
     public StringBuilder getString(){
         return new StringBuilder(this.toString());
     }
@@ -99,10 +101,11 @@ public abstract class Employee {
         if (obj == this) {
             return true;
         }
-        if (obj == null || !this.getClass().equals(obj.getClass())) {
+        if (obj == null || !(this.getClass() == obj.getClass())) {
             return false;
         }
         Employee temp = (Employee) obj;
+        //todo в топку == для строк
         return (firstName == temp.firstName || (firstName != null &&firstName.equals(temp.getFirstName()))) &&
                 (secondName == temp.secondName || (secondName != null && secondName.equals(temp.getSecondName()))) &&
                 jobTitle == temp.jobTitle && salary == temp.salary;
