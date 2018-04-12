@@ -4,7 +4,7 @@ package humanResources;
 public class Project implements EmployeeGroup{
 
     //todo вынеси повторяющиеся действия с нодами в приватные методы
-    //private add(node), getNode(index i), removeNode(index i)
+    //private add(node), removeNode(index i)
     //
     private String name;
     private int size;
@@ -30,19 +30,10 @@ public class Project implements EmployeeGroup{
         }
     }
 
-
-
     @Override
     public void add(Employee employee) {
         Node node = new Node(employee);
-        if (head == null) {
-            head = node;
-            tail = node;
-        } else {
-            tail.setNext(node);
-            tail = node;
-        }
-        size++;
+        addNode(node);
     }
 
     @Override
@@ -77,44 +68,58 @@ public class Project implements EmployeeGroup{
     }
 
     @Override
+    public Employee[] getEmployees(JobTitlesEnum jobTitle) {
+        int peopleByJob = 0;
+        Node node = head;
+        while (node != null) {
+            if (node.value.getJobTitle().equals(jobTitle)) {
+               peopleByJob++;
+            }
+            node = node.getNext();
+        }
+        Employee[] getEmployees = new Employee[peopleByJob];
+
+        int k = 0;
+
+        for (Employee x: getEmployees()) {
+            if (x.getJobTitle() == jobTitle) {
+                getEmployees[k++] = x;
+            }
+        }
+        return getEmployees;
+    }
+
+    @Override
     public boolean remove(String firstName, String secondName) {
         boolean remove = false;
-        Node pred = null;
+        Node previous = null;
         Node current;
 
         for (current = head; current != null; current = current.next){
             if (current.value.getFirstName().equals(firstName) & current.value.getSecondName().equals(secondName)) {
-                size--;
-                remove = true;
-                if (pred != null) {
-                    pred.setNext(current.getNext());
-                }
+                removeNode(previous, current);
             } else {
-                pred = current;
+                previous = current;
             }
         }
-        tail = pred;
+        tail = previous;
         return remove;
     }
 
     @Override
     public boolean remove(Employee employee) {
         boolean remove = false;
-        Node pred = null;
+        Node previous = null;
         Node current;
 
         for (current = head; current != null; current = current.next){
             if (current.value.equals(employee)) {
-                size--;
-                remove = true;
-                if (pred != null) {
-                    pred.setNext(current.getNext());
-                }
+                removeNode(previous, current);
             } else {
-                pred = current;
+                previous = current;
             }
         }
-        tail = pred;
+        tail = previous;
         return remove;
     }
 
@@ -155,6 +160,38 @@ public class Project implements EmployeeGroup{
         return mostValuableEmployee;
     }
 
+    @Override
+    public boolean hasEmployee(String firstName, String secondName) {
+        Node node = head;
+        while (node != null) {
+            if (node.value.getFirstName().equals(firstName) &
+                    node.value.getSecondName().equals(secondName)) {
+                return true;
+            }
+            node = node.getNext();
+        }
+        return false;
+    }
+
+    private void addNode(Node node){
+        if (head == null) {
+            head = node;
+            tail = node;
+        } else {
+            tail.setNext(node);
+            tail = node;
+        }
+        size++;
+    }
+
+    private boolean removeNode(Node previous, Node current){
+        if (previous != null) {
+            previous.setNext(current.getNext());
+        }
+        size--;
+        return true;
+    }
+
     private class Node {
         private Node next;
         private Employee value;
@@ -189,44 +226,52 @@ public class Project implements EmployeeGroup{
         …
         <строковое представление employee N>”
         */
+        return getString().toString();
+    }
 
-        StringBuilder line = new StringBuilder("Project " + name + ": " + size + "\n");
-
-        Node current = head;
-        while (current != null){
-            line.append(current.value.toString()).append("\n");
-            current = current.getNext();
+    public StringBuilder getString(){
+        StringBuilder line = new StringBuilder();
+        line.append("Project ").append(name).append(": ").append(size).append("\n");
+        Node employee = head;
+        while (employee != null){
+            line.append(employee.value.toString()).append("\n");
+            employee = employee.getNext();
         }
-        return line.toString();
+        return line;
     }
 
     @Override
     public boolean equals(Object obj)  {
         if (this == obj)
             return true;
-        if(obj == null && !this.getClass().equals(obj.getClass()))
+        if(obj == null || !(this.getClass() == obj.getClass()))
             return false;
 
         Project equalsProject = (Project) obj;
-        if (!equalsProject.name.equals(name))
+        if (!this.name.equals(equalsProject.name))
             return false;
-        Node current = head;
-        while(current != null) {
-            if (this.getEmployee(current.value.getFirstName(), current.value.getSecondName()) != equalsProject.getEmployee(current.value.getFirstName(), current.value.getSecondName()))
-                return false;
-            current = current.getNext();
+        if (this.size != equalsProject.size){
+            return false;
         }
-        return (size == equalsProject.size);
+        Node equalsEmployee = head;
+        while (equalsEmployee != null) {
+            if (this.head.value != equalsEmployee.value) {
+                return false;
+            }
+            this.head = head.getNext();
+            equalsEmployee = equalsEmployee.getNext();
+        }
+        return true;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        Node current = head;
-        while (current!=null) {
-            hash ^= current.value.hashCode();
-            current=current.getNext();
+        Node projects = head;
+        while (projects != null) {
+            hash ^= projects.value.hashCode();
+            projects = projects.getNext();
         }
-        return Integer.hashCode(size) ^ head.hashCode() ^ hash;
+        return name.hashCode() ^ size ^ hash;
     }
 }

@@ -2,7 +2,8 @@ package humanResources;
 
 public class StaffEmployee extends Employee implements BusinessTraveller{
 
-    //todo делай либо приватные методы работы с нодами, которые будут использоваться в публичных методах, либо выноси список в отдельный класс, со своими методами
+    //todo делай либо приватные методы работы с нодами, которые будут использоваться в публичных методах,
+    //либо выноси список в отдельный класс, со своими методами
     private int bonus;
     private ListNode head;
     private int travelsQuantity;
@@ -62,19 +63,28 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
     @Override
     public boolean addTravel(BusinessTravel travel) {
         ListNode node = new ListNode(travel);
-        head = node;
+        addNode(node);
+        return true;
+    }
+
+    private void addNode(ListNode node) {
+        if (head == null) {
+            head = node;
+        }
+        else {
+            head.setNext(node);
+        }
         head = head.getNext();
         travelsQuantity++;
-        return true;
     }
 
     @Override
     public BusinessTravel[] getTravels() {
         BusinessTravel[] getTravels = new BusinessTravel[travelsQuantity];
-        ListNode temp = head;
+        ListNode travels = head;
         for (int i = 0; i < travelsQuantity; i++) {
-            getTravels[i] = temp.value;
-            temp = temp.getNext();
+            getTravels[i] = travels.value;
+            travels = travels.getNext();
         }
         return getTravels;
     }
@@ -113,59 +123,51 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
     }
 
     //todo используй getString() и добавляешь только командировки
-    @Override
-    public String toString() {
+
         //“<secondName> <firstName>, <jobTitle>, <salary>р., <bonus>р.
         //Командировки:
         //{<BusinessTravelsInfo>}”
-        StringBuilder line = new StringBuilder();
-        if (getSecondName() != null && !getSecondName().isEmpty() && getFirstName() != null && !getFirstName().isEmpty()) {
-            line.append(getSecondName()).append(" ").append(getFirstName()).append(" ");
-        }
-        if (getJobTitle() != null && getJobTitle() != JobTitlesEnum.NONE) {
-            line.append(getJobTitle()).append(", ");
-        }
-        if (getSalary() != 0) {
-            line.append(getSalary()).append(" р.\nКомандировки:\n");
-        }
-        ListNode temp = head;
-        for (int i = 0; i < travelsQuantity; i++) {
-            line.append(temp.value.toString()).append("\n");
-            temp = temp.getNext();
-        }
-        return line.toString();
-    }
 
+    @Override
+    public StringBuilder getString() {
+        StringBuilder line = super.getString();
+        line.append(", ");
+        if (bonus != 0) {
+            line.append(bonus).append("p.\n");
+        }
+        line.append("Командировки:\n");
+        ListNode travels = head;
+        if (head != null) {
+            for (int i = 0; i < travelsQuantity; i++) {
+                line.append(travels.value.toString()).append("\n");
+                travels = travels.getNext();
+            }
+        }
+        return line;
+    }
 
     @Override
     public boolean equals(Object obj)  {
         //todo вся логика проверки до цикла есть в реализации суперкласса
         if (super.equals(obj)) {
             //теперь тут цикл
+            StaffEmployee equalsEmployee = (StaffEmployee) obj;
+            return (this.travelsQuantity == equalsEmployee.travelsQuantity);
         }
-        if (this == obj)
-            return true;
-        if(obj == null && !this.getClass().equals(obj.getClass()))
+        else {
             return false;
-        StaffEmployee temp = (StaffEmployee) obj;
-        ListNode current = head;
-        while(current!=null) {
-            if (this.travelsQuantity != temp.travelsQuantity)
-                return false;
-            current = current.getNext();
         }
-        return (travelsQuantity == temp.travelsQuantity);
     }
 
     //todo вызывай super/hashcode() тоже
     @Override
     public int hashCode() {
         int hash = 0;
-        ListNode temp = head;
-        while (temp!=null) {
-            hash ^= temp.value.hashCode();
-            temp = temp.getNext();
+        ListNode travels = head;
+        while (travels != null) {
+            hash ^= travels.value.hashCode();
+            travels = travels.getNext();
         }
-        return Integer.hashCode(travelsQuantity) ^ head.hashCode() ^ hash;
+        return super.hashCode() ^ bonus ^ hash ^ travelsQuantity;
     }
 }

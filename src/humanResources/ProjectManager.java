@@ -30,14 +30,7 @@ public class ProjectManager implements GroupsManager{
     @Override
     public void add(EmployeeGroup groupable) {
         ProjectsNode node = new ProjectsNode(groupable);
-        if (head == null) {
-            head = node;
-            tail = node;
-        } else {
-            tail.setNext(node);
-            tail = node;
-        }
-        size++;
+        addNode(node);
     }
 
     /*
@@ -47,21 +40,18 @@ public class ProjectManager implements GroupsManager{
     @Override
     public int remove(EmployeeGroup group) {
         int remove = 0;
-        ProjectsNode pred = null;
+        ProjectsNode previous = null;
         ProjectsNode current;
 
         for (current = head; current != null; current = current.getNext()){
             if (current.value.equals(group)) {
-                size--;
-                remove++;
-                if (pred != null) {
-                    pred.setNext(current.getNext());
-                }
+                if(removeNode(previous, current))
+                    remove++;
             } else {
-                pred = current;
+                previous = current;
             }
         }
-        tail = pred;
+        tail = previous;
         return remove;
     }
 
@@ -72,21 +62,18 @@ public class ProjectManager implements GroupsManager{
     @Override
     public boolean remove(String groupName) {
         boolean remove = false;
-        ProjectsNode pred = null;
+        ProjectsNode previous = null;
         ProjectsNode current;
 
         for (current = head; current != null; current = current.next){
             if (current.value.getName().equals(groupName)) {
-                size--;
-                remove = true;
-                if (pred != null) {
-                    pred.setNext(current.getNext());
-                }
+                if (removeNode(previous, current))
+                    remove = true;
             } else {
-                pred = current;
+                previous = current;
             }
         }
-        tail = pred;
+        tail = previous;
         return remove;
     }
 
@@ -156,15 +143,16 @@ public class ProjectManager implements GroupsManager{
     public int employeesQuantity(JobTitlesEnum jobTitle) {
         ProjectsNode node = head;
         int employeesQuantity = 0;
-        while (node != null) {
-            for (int i = 0; i < node.value.employeeQuantity(); i++) {
-                if (node.value.getEmployees()[i].getJobTitle().equals(jobTitle)) {
-                    employeesQuantity++;
-                }
+
+        if (size !=0) {
+            for (int i = 0; i < size; i++) {
+                employeesQuantity += node.value.getEmployees(jobTitle).length;
+                node = node.getNext();
             }
-            node = node.getNext();
+            return employeesQuantity;
         }
-        return employeesQuantity;
+        else
+            return 0;
     }
 
     /*
@@ -194,14 +182,31 @@ public class ProjectManager implements GroupsManager{
         ProjectsNode node = head;
         EmployeeGroup getEmployeesGroup = null;
         while (node != null) {
-            for (int i = 0; i < node.value.employeeQuantity(); i++) {
-                if (node.value.getEmployees()[i].getFirstName().equals(firstName) & node.value.getEmployees()[i].getSecondName().equals(secondName)) {
-                    getEmployeesGroup = node.value;
-                }
+            if (node.value.hasEmployee(firstName, secondName)) {
+                getEmployeesGroup = node.value;
             }
             node = node.getNext();
         }
         return getEmployeesGroup;
+    }
+
+    private void addNode(ProjectsNode node){
+        if (head == null) {
+            head = node;
+            tail = node;
+        } else {
+            tail.setNext(node);
+            tail = node;
+        }
+        size++;
+    }
+
+    private boolean removeNode(ProjectsNode previous, ProjectsNode current){
+        if (previous != null) {
+            previous.setNext(current.getNext());
+        }
+        size--;
+        return true;
     }
 
     private class ProjectsNode {

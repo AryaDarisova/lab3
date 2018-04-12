@@ -251,38 +251,26 @@ public class Department implements EmployeeGroup{
      */
 
     public JobTitlesEnum[] jobTitles(){
-        int count, uniq = 1;
-        for(int i = 0; i < size; i++)
+        int num = size;
+        for (int i = 0, m; i != num; i++, num = m )
         {
-            count = 0;
-            for( int j = 0; j < size - 1; j++)
-                if ((employees[i].getJobTitle().equals(employees[j].getJobTitle())))
-                    count++;
-            if (count == 1)
-                uniq++;
-        }
-
-        JobTitlesEnum[] jobTitles = new JobTitlesEnum[uniq];
-        for(int i = 0, j = 0; i < size; i++) {
-            if(CheckUniqueness(employees[i], jobTitles)) {
-                jobTitles[j] = employees[i].getJobTitle();
-                j++;
-            }
-        }
-        return jobTitles;
-    }
-
-    private boolean CheckUniqueness(Employee employees, JobTitlesEnum[] jobTitles){
-        if (jobTitles[0] == null)
-            return true;
-        else {
-            for(int j = 0; j < jobTitles.length; j++) {
-                if(employees.getJobTitle().equals(jobTitles[j])) {
-                    return false;
+            for ( int j = m = i + 1; j != num; j++ )
+            {
+                if (!employees[j].getJobTitle().equals(employees[i].getJobTitle()))
+                {
+                    if ( m != j )
+                        employees[m] = employees[j];
+                    m++;
                 }
             }
         }
-        return true;
+        JobTitlesEnum[] jobTitles = new JobTitlesEnum[num];
+        if ( num != size)
+        {
+            for ( int i = 0; i < num; i++ )
+                jobTitles[i] = employees[i].getJobTitle();
+        }
+        return jobTitles;
     }
 
     /*
@@ -315,30 +303,36 @@ public class Department implements EmployeeGroup{
     …
     <строковое представление employee N>”
     */
-        StringBuilder resultString = new StringBuilder("Department " + name + ": " + size + "\n");
-        if(size!=0) {
-            resultString.append(size).append('\n');
-            for(Employee x : employees) {
-                resultString.append(x.toString()).append('\n');
-            }
+        return getString().toString();
+    }
+
+    public StringBuilder getString(){
+        StringBuilder line = new StringBuilder();
+        line.append("Department ").append(name).append(": ").append(size).append("\n");
+        for(Employee x : employees) {
+            line.append(x.toString()).append('\n');
         }
-        return resultString.toString();
+        return line;
     }
 
     @Override
     public boolean equals(Object obj){
         if (this == obj)
             return true;
-        if (obj==null && !this.getClass().equals(obj.getClass()))
+        if (obj==null || !(this.getClass() == obj.getClass()))
             return false;
-
         Department equalsDepartment = (Department) obj;
+        if (!this.name.equals(equalsDepartment.name)) {
+            return false;
+        }
+        if (this.size != equalsDepartment.size) {
+            return false;
+        }
         for (int i = 0; i < size; i++) {
-            if (this.getEmployees() != equalsDepartment.getEmployees())
+            if (this.employees[i] != equalsDepartment.employees[i])
                 return false;
         }
-        return (this.name.equals(equalsDepartment.name)
-                && this.size == equalsDepartment.size);
+        return true;
     }
 
     @Override
@@ -347,6 +341,6 @@ public class Department implements EmployeeGroup{
         for (Employee x: employees) {
             hash ^= x.hashCode();
         }
-        return size ^ hash;
+        return name.hashCode() ^ hash ^ size;
     }
 }

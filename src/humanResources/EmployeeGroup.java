@@ -14,6 +14,8 @@ public interface EmployeeGroup {
     public String toString();
     public boolean equals(Object obj);
     public int hashCode();
+    public Employee[] getEmployees(JobTitlesEnum jobTitle);
+    public boolean hasEmployee(String firstName, String secondName);
 
     /*
     - возвращающий имя группы

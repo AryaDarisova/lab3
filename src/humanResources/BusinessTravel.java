@@ -56,17 +56,21 @@ public final class BusinessTravel {
     @Override
     public String toString() {
         //“<city> <daysCount> (<compensation>). <description>”
+        return getString().toString();
+    }
+
+    public StringBuilder getString(){
         StringBuilder line = new StringBuilder();
         if (destination != null && !destination.isEmpty()) {
             line.append(destination).append(" ");
         }
         if (daysCount != 0 && compensation != 0) {
-            line.append(daysCount).append(" ").append("(").append(compensation).append("). ");
+            line.append(daysCount).append(" (").append(compensation).append("). ");
         }
         if (description != null && !description.isEmpty()) {
             line.append(description);
         }
-        return line.toString();
+        return line;
     }
 
     @Override
@@ -74,17 +78,18 @@ public final class BusinessTravel {
         if (obj == this) {
             return true;
         }
-        if (obj == null && (this.getClass()!=obj.getClass())) {
+        if (obj == null || !(this.getClass() == obj.getClass())) {
             return false;
         }
-        BusinessTravel temp = (BusinessTravel) obj;
-        return compensation == temp.compensation && daysCount == temp.daysCount &&
-                (description == temp.description || (description != null && description.equals(temp.description))) &&
-                (destination == temp.destination || (destination != null && destination.equals(temp.destination)));
+        BusinessTravel equalsTravel = (BusinessTravel) obj;
+        return (this.compensation == equalsTravel.compensation) &&
+                (this.daysCount == equalsTravel.daysCount) &&
+                (this.description.equals(equalsTravel.description)) &&
+                (this.destination.equals(equalsTravel.destination));
     }
 
     @Override
     public int hashCode() {
-        return compensation^daysCount^description.hashCode()^destination.hashCode();
+        return compensation ^ daysCount ^ description.hashCode() ^ destination.hashCode();
     }
 }

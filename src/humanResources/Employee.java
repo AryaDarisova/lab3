@@ -74,26 +74,35 @@ public abstract class Employee {
 
     public abstract void setBonus(int bonus);
 
+    /*
+    Переопределите методы класса Object:
+     public String toString(). Возвращаемая строка составляется в формате:
+    “<secondName> <firstName>, <jobTitle>, <salary>р.”
+    При этом в результирующую строку включаются только поля с нормальными значениями
+    (пустые строки, null, NONE и 0 – не включаются).
+     public boolean equals(Object obj). 2 объекта считаются равными (equal), если у них все
+    поля совпадают.
+     public int hashCode(). Вычисляется как последовательное “исключающее или” хэш-
+    кодов всех полей.
+     */
+
     //todo наоборот, toString вызывает getString()
     @Override
     public String toString(){
         //“<secondName> <firstName>, <jobTitle>, <salary>р.”
-        StringBuilder line = new StringBuilder();
-        if (secondName != null && !secondName.isEmpty() && firstName != null && !firstName.isEmpty()) {
-            line.append(secondName).append(" ").append(firstName).append(", ");
-        }
-        if (jobTitle != null && jobTitle != JobTitlesEnum.NONE) {
-            line.append(jobTitle).append(", ");
-        }
-        if (salary != 0) {
-            line.append(salary).append(" р.");
-        }
-        return line.toString();
+        return getString().toString();
     }
 
     //todo замени этот piece of shit! Тут реализуется логика формирования строки, и сформированный билдер возвращается
-    public StringBuilder getString(){
-        return new StringBuilder(this.toString());
+    public StringBuilder getString() {
+        StringBuilder line = new StringBuilder();
+        if(secondName != null && !secondName.isEmpty() && firstName != null && !firstName.isEmpty())
+            line.append(secondName).append(" ").append(firstName).append(", ");
+        if (jobTitle != JobTitlesEnum.NONE)
+            line.append(jobTitle).append(", ");
+        if (salary != 0)
+            line.append(salary).append("p.");
+        return line;
     }
 
     @Override
@@ -104,15 +113,16 @@ public abstract class Employee {
         if (obj == null || !(this.getClass() == obj.getClass())) {
             return false;
         }
-        Employee temp = (Employee) obj;
+        Employee matchedEmployee = (Employee) obj;
         //todo в топку == для строк
-        return (firstName == temp.firstName || (firstName != null &&firstName.equals(temp.getFirstName()))) &&
-                (secondName == temp.secondName || (secondName != null && secondName.equals(temp.getSecondName()))) &&
-                jobTitle == temp.jobTitle && salary == temp.salary;
+        return (this.secondName.equals(matchedEmployee.secondName)) &&
+                (this.firstName.equals(matchedEmployee.firstName)) &&
+                (this.jobTitle == matchedEmployee.jobTitle) &&
+                (this.salary == matchedEmployee.salary);
     }
 
     @Override
     public int hashCode() {
-        return firstName.hashCode()^secondName.hashCode()^jobTitle.hashCode()^salary;
+        return secondName.hashCode() ^ firstName.hashCode() ^ jobTitle.hashCode() ^ salary;
     }
 }
