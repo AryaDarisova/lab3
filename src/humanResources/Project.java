@@ -84,12 +84,10 @@ public class Project implements EmployeeGroup{
         Employee[] getEmployees = new Employee[getEmployeesQuantity(jobTitle)];
 
         for (int i = 0; i < getEmployeesQuantity(jobTitle); i++){
-            while (node != null) {
-                if (node.value.getJobTitle().equals(jobTitle)) {
-                    getEmployees[i] = node.value;
-                }
-                node = node.next;
+            if (node.value.getJobTitle().equals(jobTitle)) {
+                getEmployees[i] = node.value;
             }
+            node = node.next;
         }
 
         /*for (Employee x: getEmployees()) { //TODO dislike ибо создаешь массив. Сделай аналогичный цикл

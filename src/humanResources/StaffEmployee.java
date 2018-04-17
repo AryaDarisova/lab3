@@ -125,11 +125,11 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
     @Override
     public boolean equals(Object obj)  {
         //todo вся логика проверки до цикла есть в реализации суперкласса
-        StaffEmployee equalsEmployee = (StaffEmployee) obj;
-        ListNode current = head;
         if (super.equals(obj)) {
+            StaffEmployee equalsEmployee = (StaffEmployee) obj;
+            ListNode current = head;
             //теперь тут цикл
-            while(current!=null) {
+            while(current != null) {
                 if (this.travelsQuantity != equalsEmployee.travelsQuantity)
                     return false;
                 current = current.next;
