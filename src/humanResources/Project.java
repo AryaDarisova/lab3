@@ -1,9 +1,7 @@
 package humanResources;
 
-//todo УБЕРИ СРАНЫЙ pred!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 public class Project implements EmployeeGroup{
 
-    //todo вынеси повторяющиеся действия с нодами в приватные методы
     //private add(node), removeNode(index i)
     //
     private String name;
@@ -69,6 +67,7 @@ public class Project implements EmployeeGroup{
 
     @Override
     public Employee[] getEmployees(JobTitlesEnum jobTitle) {
+
         int peopleByJob = 0;
         Node node = head;
         while (node != null) {
@@ -81,7 +80,7 @@ public class Project implements EmployeeGroup{
 
         int k = 0;
 
-        for (Employee x: getEmployees()) {
+        for (Employee x: getEmployees()) { //TODO dislike ибо создаешь массив. Сделай аналогичный цикл
             if (x.getJobTitle() == jobTitle) {
                 getEmployees[k++] = x;
             }
@@ -200,21 +199,6 @@ public class Project implements EmployeeGroup{
             this.value = value;
         }
 
-        public void setValue(Employee value) {
-            this.value = value;
-        }
-
-        public Employee getValue() {
-            return value;
-        }
-
-        void setNext(Node next) {
-            this.next = next;
-        }
-
-        Node getNext() {
-            return next;
-        }
     }
 
     @Override

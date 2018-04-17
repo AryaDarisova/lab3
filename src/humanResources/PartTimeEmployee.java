@@ -30,16 +30,10 @@ public class PartTimeEmployee extends Employee {
     }
 
     @Override
-    public String toString(){
-        //“<secondName> <firstName>, <jobTitle> (внешний совместитель), <salary>р.”
-        //todo в полученный Билдер вставить строку про совместителя
-        super.getString().insert(super.getString().lastIndexOf(","), " (внешний совместитель)");
-        return super.getString().toString();
+    public StringBuilder getString() {
+        return  super.getString().insert(super.getString().lastIndexOf(","), " (внешний совместитель)");
     }
 
-    //todo в таком переопределении нет смысла, нужно просто удалить
-
-    //todo вызывай реализацию суперкласса, там уже вычисляется хэн на основе части полей
     @Override
     public int hashCode(){
         return super.hashCode() ^ getJobTitle().hashCode();

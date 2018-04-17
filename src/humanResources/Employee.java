@@ -86,14 +86,12 @@ public abstract class Employee {
     кодов всех полей.
      */
 
-    //todo наоборот, toString вызывает getString()
     @Override
     public String toString(){
         //“<secondName> <firstName>, <jobTitle>, <salary>р.”
         return getString().toString();
     }
 
-    //todo замени этот piece of shit! Тут реализуется логика формирования строки, и сформированный билдер возвращается
     public StringBuilder getString() {
         StringBuilder line = new StringBuilder();
         if(secondName != null && !secondName.isEmpty() && firstName != null && !firstName.isEmpty())
@@ -114,7 +112,6 @@ public abstract class Employee {
             return false;
         }
         Employee matchedEmployee = (Employee) obj;
-        //todo в топку == для строк
         return (this.secondName.equals(matchedEmployee.secondName)) &&
                 (this.firstName.equals(matchedEmployee.firstName)) &&
                 (this.jobTitle == matchedEmployee.jobTitle) &&

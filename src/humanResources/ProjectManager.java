@@ -1,6 +1,5 @@
 package humanResources;
 
-//todo УБЕРИ СРАНЫЙ pred!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 public class ProjectManager implements GroupsManager{
     private ProjectsNode head;
     private ProjectsNode tail;
@@ -28,8 +27,8 @@ public class ProjectManager implements GroupsManager{
      */
 
     @Override
-    public void add(EmployeeGroup groupable) {
-        ProjectsNode node = new ProjectsNode(groupable);
+    public void add(EmployeeGroup group) {
+        ProjectsNode node = new ProjectsNode(group);
         addNode(node);
     }
 
@@ -137,7 +136,6 @@ public class ProjectManager implements GroupsManager{
     /*
     - возвращающий количество сотрудников, занимающих заданную должность (должность передается в качестве параметра).
      */
-    //todo аналогично реализации в департаменте
 
     @Override
     public int employeesQuantity(JobTitlesEnum jobTitle) {
@@ -146,7 +144,7 @@ public class ProjectManager implements GroupsManager{
 
         if (size !=0) {
             for (int i = 0; i < size; i++) {
-                employeesQuantity += node.value.getEmployees(jobTitle).length;
+                employeesQuantity += node.value.getEmployees(jobTitle).length; //TODO OH NO! не создавай массив, создай метод, возваращющий число сотрудникоа с заданной должностью вынеси его в интерфейс
                 node = node.getNext();
             }
             return employeesQuantity;
@@ -164,8 +162,9 @@ public class ProjectManager implements GroupsManager{
         ProjectsNode node = head;
         Employee mostValuableEmployee = head.value.mostValuableEmployee();
         while (node != null) {
-            if (mostValuableEmployee.getSalary() < node.value.mostValuableEmployee().getSalary()) {
-                mostValuableEmployee = node.value.mostValuableEmployee();
+            Employee currentMostValuableEmployee = node.value.mostValuableEmployee();
+            if (mostValuableEmployee.getSalary() < currentMostValuableEmployee.getSalary()) {
+                mostValuableEmployee = currentMostValuableEmployee;
             }
             node = node.getNext();
         }
@@ -176,7 +175,6 @@ public class ProjectManager implements GroupsManager{
     - возвращающий ссылку на группу к которой относится сотрудник. Имя и фамилия сотрудника передается в качестве параметра.
      */
 
-    //todo аналогично реализации в департаменте
     @Override
     public EmployeeGroup getEmployeesGroup(String firstName, String secondName) {
         ProjectsNode node = head;
@@ -217,20 +215,5 @@ public class ProjectManager implements GroupsManager{
             this.value = value;
         }
 
-        public void setValue(EmployeeGroup value) {
-            this.value = value;
-        }
-
-        public EmployeeGroup getValue() {
-            return value;
-        }
-
-        void setNext(ProjectsNode next) {
-            this.next = next;
-        }
-
-        ProjectsNode getNext() {
-            return next;
-        }
     }
 }

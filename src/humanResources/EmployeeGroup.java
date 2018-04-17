@@ -16,6 +16,8 @@ public interface EmployeeGroup {
     public int hashCode();
     public Employee[] getEmployees(JobTitlesEnum jobTitle);
     public boolean hasEmployee(String firstName, String secondName);
+    //TODO сделай метод getEmployeesQuantity(JobTitlesEnum jobTitle)
+
 
     /*
     - возвращающий имя группы

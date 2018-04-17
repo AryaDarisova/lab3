@@ -89,40 +89,16 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
         return getTravels;
     }
 
+    //TODO previous
     private class ListNode {
-        private ListNode next, prev;
-        private BusinessTravel value;
+        ListNode next, prev;
+        BusinessTravel value;
 
         public ListNode(BusinessTravel value) {
             this.value = value;
         }
 
-        public void setValue(BusinessTravel value) {
-            this.value = value;
-        }
-
-        public BusinessTravel getValue() {
-            return value;
-        }
-
-        public ListNode getNext() {
-            return next;
-        }
-
-        public void setNext(ListNode next) {
-            this.next = next;
-        }
-
-        public ListNode getPrev() {
-            return prev;
-        }
-
-        public void setPrev(ListNode prev) {
-            this.prev = prev;
-        }
     }
-
-    //todo используй getString() и добавляешь только командировки
 
         //“<secondName> <firstName>, <jobTitle>, <salary>р., <bonus>р.
         //Командировки:
@@ -159,15 +135,14 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
         }
     }
 
-    //todo вызывай super/hashcode() тоже
     @Override
     public int hashCode() {
-        int hash = 0;
+        int hash = super.hashCode() ^ bonus ^ travelsQuantity;;
         ListNode travels = head;
         while (travels != null) {
             hash ^= travels.value.hashCode();
             travels = travels.getNext();
         }
-        return super.hashCode() ^ bonus ^ hash ^ travelsQuantity;
+        return hash;
     }
 }

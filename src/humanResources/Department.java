@@ -99,7 +99,6 @@ public class Department implements EmployeeGroup{
     - возвращающий массив сотрудников, занимающих заданную должность (должность
     передается в качестве параметра)
     */
-
     public Employee[] getEmployees(JobTitlesEnum jobTitle) {
         int peopleByJob = 0;
         for (int i = 0; i < size; i++) {
