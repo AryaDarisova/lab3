@@ -42,7 +42,7 @@ public class ProjectManager implements GroupsManager{
         ProjectsNode previous = null;
         ProjectsNode current;
 
-        for (current = head; current != null; current = current.getNext()){
+        for (current = head; current != null; current = current.next){
             if (current.value.equals(group)) {
                 if(removeNode(previous, current))
                     remove++;
@@ -89,7 +89,7 @@ public class ProjectManager implements GroupsManager{
                 group = node.value;
                 return group;
             }
-            node = node.getNext();
+            node = node.next;
         }
         return group;
     }
@@ -104,7 +104,7 @@ public class ProjectManager implements GroupsManager{
         ProjectsNode node = head;
         for (int i = 0; i < size; i++) {
             getGroups[i] = node.value;
-            node = node.getNext();
+            node = node.next;
         }
         return getGroups;
     }
@@ -128,7 +128,7 @@ public class ProjectManager implements GroupsManager{
         int employeesQuantity = 0;
         while (node != null) {
             employeesQuantity += node.value.employeeQuantity();
-            node = node.getNext();
+            node = node.next;
         }
         return employeesQuantity;
     }
@@ -145,7 +145,7 @@ public class ProjectManager implements GroupsManager{
         if (size !=0) {
             for (int i = 0; i < size; i++) {
                 employeesQuantity += node.value.getEmployees(jobTitle).length; //TODO OH NO! не создавай массив, создай метод, возваращющий число сотрудникоа с заданной должностью вынеси его в интерфейс
-                node = node.getNext();
+                node = node.next;
             }
             return employeesQuantity;
         }
@@ -166,7 +166,7 @@ public class ProjectManager implements GroupsManager{
             if (mostValuableEmployee.getSalary() < currentMostValuableEmployee.getSalary()) {
                 mostValuableEmployee = currentMostValuableEmployee;
             }
-            node = node.getNext();
+            node = node.next;
         }
         return mostValuableEmployee;
     }
@@ -183,7 +183,7 @@ public class ProjectManager implements GroupsManager{
             if (node.value.hasEmployee(firstName, secondName)) {
                 getEmployeesGroup = node.value;
             }
-            node = node.getNext();
+            node = node.next;
         }
         return getEmployeesGroup;
     }
@@ -193,7 +193,7 @@ public class ProjectManager implements GroupsManager{
             head = node;
             tail = node;
         } else {
-            tail.setNext(node);
+            tail.next = node;
             tail = node;
         }
         size++;
@@ -201,7 +201,7 @@ public class ProjectManager implements GroupsManager{
 
     private boolean removeNode(ProjectsNode previous, ProjectsNode current){
         if (previous != null) {
-            previous.setNext(current.getNext());
+            previous.next = current.next;
         }
         size--;
         return true;

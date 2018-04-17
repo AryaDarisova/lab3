@@ -72,9 +72,9 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
             head = node;
         }
         else {
-            head.setNext(node);
+            head.next = node;
         }
-        head = head.getNext();
+        head = head.next;
         travelsQuantity++;
     }
 
@@ -84,14 +84,14 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
         ListNode travels = head;
         for (int i = 0; i < travelsQuantity; i++) {
             getTravels[i] = travels.value;
-            travels = travels.getNext();
+            travels = travels.next;
         }
         return getTravels;
     }
 
     //TODO previous
     private class ListNode {
-        ListNode next, prev;
+        ListNode next, previous;
         BusinessTravel value;
 
         public ListNode(BusinessTravel value) {
@@ -116,7 +116,7 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
         if (head != null) {
             for (int i = 0; i < travelsQuantity; i++) {
                 line.append(travels.value.toString()).append("\n");
-                travels = travels.getNext();
+                travels = travels.next;
             }
         }
         return line;
@@ -125,14 +125,17 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
     @Override
     public boolean equals(Object obj)  {
         //todo вся логика проверки до цикла есть в реализации суперкласса
+        StaffEmployee equalsEmployee = (StaffEmployee) obj;
+        ListNode current = head;
         if (super.equals(obj)) {
             //теперь тут цикл
-            StaffEmployee equalsEmployee = (StaffEmployee) obj;
-            return (this.travelsQuantity == equalsEmployee.travelsQuantity);
+            while(current!=null) {
+                if (this.travelsQuantity != equalsEmployee.travelsQuantity)
+                    return false;
+                current = current.next;
+            }
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
     @Override
@@ -141,7 +144,7 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
         ListNode travels = head;
         while (travels != null) {
             hash ^= travels.value.hashCode();
-            travels = travels.getNext();
+            travels = travels.next;
         }
         return hash;
     }

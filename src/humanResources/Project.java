@@ -55,7 +55,7 @@ public class Project implements EmployeeGroup{
         Node node = head;
         for (int i = 0; i < size; i++){
             getEmployees[i] = node.value;
-            node = node.getNext();
+            node = node.next;
         }
         return getEmployees;
     }
@@ -66,25 +66,37 @@ public class Project implements EmployeeGroup{
     }
 
     @Override
-    public Employee[] getEmployees(JobTitlesEnum jobTitle) {
-
-        int peopleByJob = 0;
+    public int getEmployeesQuantity(JobTitlesEnum jobTitle){
+        int employeesQuantity = 0;
         Node node = head;
         while (node != null) {
             if (node.value.getJobTitle().equals(jobTitle)) {
-               peopleByJob++;
+                employeesQuantity++;
             }
-            node = node.getNext();
+            node = node.next;
         }
-        Employee[] getEmployees = new Employee[peopleByJob];
+        return employeesQuantity;
+    }
 
-        int k = 0;
+    @Override
+    public Employee[] getEmployees(JobTitlesEnum jobTitle) {
+        Node node = head;
+        Employee[] getEmployees = new Employee[getEmployeesQuantity(jobTitle)];
 
-        for (Employee x: getEmployees()) { //TODO dislike ибо создаешь массив. Сделай аналогичный цикл
+        for (int i = 0; i < getEmployeesQuantity(jobTitle); i++){
+            while (node != null) {
+                if (node.value.getJobTitle().equals(jobTitle)) {
+                    getEmployees[i] = node.value;
+                }
+                node = node.next;
+            }
+        }
+
+        /*for (Employee x: getEmployees()) { //TODO dislike ибо создаешь массив. Сделай аналогичный цикл
             if (x.getJobTitle() == jobTitle) {
                 getEmployees[k++] = x;
             }
-        }
+        }*/
         return getEmployees;
     }
 
@@ -131,7 +143,7 @@ public class Project implements EmployeeGroup{
                 getEmployee = current.value;
                 return getEmployee;
             }
-            current = current.getNext();
+            current = current.next;
         }
         return getEmployee;
     }
@@ -154,7 +166,7 @@ public class Project implements EmployeeGroup{
             if (mostValuableEmployee.getSalary() < current.value.getSalary()) {
                 mostValuableEmployee = current.value;
             }
-            current = current.getNext();
+            current = current.next;
         }
         return mostValuableEmployee;
     }
@@ -167,7 +179,7 @@ public class Project implements EmployeeGroup{
                     node.value.getSecondName().equals(secondName)) {
                 return true;
             }
-            node = node.getNext();
+            node = node.next;
         }
         return false;
     }
@@ -177,7 +189,7 @@ public class Project implements EmployeeGroup{
             head = node;
             tail = node;
         } else {
-            tail.setNext(node);
+            tail.next = node;
             tail = node;
         }
         size++;
@@ -185,7 +197,7 @@ public class Project implements EmployeeGroup{
 
     private boolean removeNode(Node previous, Node current){
         if (previous != null) {
-            previous.setNext(current.getNext());
+            previous.next = current.next;
         }
         size--;
         return true;
@@ -219,7 +231,7 @@ public class Project implements EmployeeGroup{
         Node employee = head;
         while (employee != null){
             line.append(employee.value.toString()).append("\n");
-            employee = employee.getNext();
+            employee = employee.next;
         }
         return line;
     }
@@ -242,8 +254,8 @@ public class Project implements EmployeeGroup{
             if (this.head.value != equalsEmployee.value) {
                 return false;
             }
-            this.head = head.getNext();
-            equalsEmployee = equalsEmployee.getNext();
+            this.head = head.next;
+            equalsEmployee = equalsEmployee.next;
         }
         return true;
     }
@@ -254,7 +266,7 @@ public class Project implements EmployeeGroup{
         Node projects = head;
         while (projects != null) {
             hash ^= projects.value.hashCode();
-            projects = projects.getNext();
+            projects = projects.next;
         }
         return name.hashCode() ^ size ^ hash;
     }

@@ -96,17 +96,27 @@ public class Department implements EmployeeGroup{
     }
 
     /*
+    - подсчет количества сотрудников по фамилии
+     */
+
+    @Override
+    public int getEmployeesQuantity(JobTitlesEnum jobTitle){
+        int employeesQuatity = 0;
+        for (int i = 0; i < size; i++) {
+            if (employees[i].getJobTitle().equals(jobTitle)) {
+                employeesQuatity++;
+            }
+        }
+        return employeesQuatity;
+    }
+
+    /*
     - возвращающий массив сотрудников, занимающих заданную должность (должность
     передается в качестве параметра)
     */
+
     public Employee[] getEmployees(JobTitlesEnum jobTitle) {
-        int peopleByJob = 0;
-        for (int i = 0; i < size; i++) {
-            if (employees[i].getJobTitle().equals(jobTitle)) {
-                peopleByJob++;
-            }
-        }
-        Employee[] employeesByJobTitle = new Employee[peopleByJob];
+        Employee[] employeesByJobTitle = new Employee[getEmployeesQuantity(jobTitle)];
         for (int j = 0, k = 0; j < size; j++) {
             if (employees[j].getJobTitle().equals(jobTitle)) {
                 employeesByJobTitle[k] = employees[j];
