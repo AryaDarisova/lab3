@@ -90,7 +90,7 @@ public class Project implements EmployeeGroup{
             node = node.next;
         }
 
-        /*for (Employee x: getEmployees()) { //TODO dislike ибо создаешь массив. Сделай аналогичный цикл
+        /*for (Employee x: getEmployees()) {
             if (x.getJobTitle() == jobTitle) {
                 getEmployees[k++] = x;
             }

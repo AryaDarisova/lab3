@@ -2,7 +2,6 @@ package humanResources;
 
 public class StaffEmployee extends Employee implements BusinessTraveller{
 
-    //todo делай либо приватные методы работы с нодами, которые будут использоваться в публичных методах,
     //либо выноси список в отдельный класс, со своими методами
     private int bonus;
     private ListNode head;
@@ -89,12 +88,11 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
         return getTravels;
     }
 
-    //TODO previous
     private class ListNode {
         ListNode next, previous;
         BusinessTravel value;
 
-        public ListNode(BusinessTravel value) {
+        ListNode(BusinessTravel value) {
             this.value = value;
         }
 
@@ -124,7 +122,6 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
 
     @Override
     public boolean equals(Object obj)  {
-        //todo вся логика проверки до цикла есть в реализации суперкласса
         if (super.equals(obj)) {
             StaffEmployee equalsEmployee = (StaffEmployee) obj;
             ListNode current = head;
@@ -134,6 +131,7 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
                     return false;
                 current = current.next;
             }
+            return true;
         }
         return false;
     }
