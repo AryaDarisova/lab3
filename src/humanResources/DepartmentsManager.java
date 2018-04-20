@@ -182,4 +182,13 @@ public class DepartmentsManager implements GroupsManager {
         }
         return getEmployeesDepartment;
     }
+
+    @Override
+    public void setBonus() {
+        for (int i = 0; i < size; i++) {
+            for (Employee x: departments[i].businessTravellers()) {
+                x.setBonus(x.getSalary() / 2);
+            }
+        }
+    }
 }

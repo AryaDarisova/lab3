@@ -48,6 +48,10 @@ public class StaffEmployee extends Employee implements BusinessTraveller{
 на экземпляр класса BusinessTravel).
     - возвращающий массив командировок.
      */
+    @Override
+    public int getTravelsQuantity() {
+        return travelsQuantity;
+    }
 
     @Override
     public int getBonus() {

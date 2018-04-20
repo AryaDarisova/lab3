@@ -17,7 +17,8 @@ public interface EmployeeGroup {
     public Employee[] getEmployees(JobTitlesEnum jobTitle);
     public boolean hasEmployee(String firstName, String secondName);
     int getEmployeesQuantity(JobTitlesEnum jobTitle);
-
+    Employee[] businessTravellers();
+    int travellers();
 
     /*
     - возвращающий имя группы

@@ -11,6 +11,7 @@ public interface GroupsManager {
     int employeesQuantity(JobTitlesEnum jobTitle);
     Employee mostValuableEmployee();
     EmployeeGroup getEmployeesGroup(String firstName, String secondName);
+    void setBonus();
 
 
     /*

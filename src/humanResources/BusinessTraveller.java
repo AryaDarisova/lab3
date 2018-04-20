@@ -11,4 +11,5 @@ public interface BusinessTraveller {
 
     boolean addTravel(BusinessTravel travel);
     BusinessTravel[] getTravels();
+    int getTravelsQuantity();
 }

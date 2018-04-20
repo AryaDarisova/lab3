@@ -286,17 +286,24 @@ public class Department implements EmployeeGroup{
     - возвращающий массив сотрудников, которые хоть раз направлялись в командировку.
      */
 
-    public Employee[] businessTravellers() {
+    @Override
+    public int travellers() {
         int travellers = 0;
         for (int i = 0; i < size; i++) {
-            if (employees[i] instanceof StaffEmployee) {
+            if (employees[i] instanceof StaffEmployee & ((StaffEmployee) employees[i]).getTravelsQuantity() > 0) {
                 travellers++;
             }
         }
+        return travellers;
+    }
+
+    @Override
+    public Employee[] businessTravellers() {
         int k = 0;
-        Employee[] businessTravellers = new Employee[travellers];
+        Employee[] businessTravellers = new Employee[travellers()];
         for (Employee x: employees) {
             if (x instanceof StaffEmployee) {
+                if (((StaffEmployee) x).getTravelsQuantity() > 0)
                 businessTravellers[k++] = x;
             }
         }
