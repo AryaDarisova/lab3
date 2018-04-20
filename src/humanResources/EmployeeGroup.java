@@ -18,6 +18,8 @@ public interface EmployeeGroup {
     public boolean hasEmployee(String firstName, String secondName);
     int getEmployeesQuantity(JobTitlesEnum jobTitle);
     void bonusForBusinessTravellers();
+    int travellers();
+    Employee[] businessTravellers();
 
     /*
     - возвращающий имя группы

@@ -275,10 +275,51 @@ public class Project implements EmployeeGroup{
      */
 
     @Override
+    public int travellers() {
+        int travellers = 0;
+        Node node = head;
+        while (node != null) {
+            if (node.value instanceof StaffEmployee)
+                if (((StaffEmployee) node.value).getTravelsQuantity() > 0) {
+                travellers++;
+            }
+            node = node.next;
+        }
+        return travellers;
+    }
+
+    @Override
+    public Employee[] businessTravellers() {
+        Node node = head;
+        int k = 0;
+        Employee[] businessTravellers = new Employee[travellers()];
+        while (node != null){
+            if (node.value instanceof StaffEmployee)
+                if (((StaffEmployee) node.value).getTravelsQuantity() > 0)
+                businessTravellers[k++] = node.value;
+            node = node.next;
+        }
+        return businessTravellers;
+    }
+
+    /*
+    - проверяется количество командировок
+     */
+
+    public boolean isTraveller(Node node) {
+        return ((StaffEmployee) node.value).getTravelsQuantity() > 0;
+    }
+
+    /*
+    - устанавливает бонус в половину зарплаты
+    */
+
+    @Override
     public void bonusForBusinessTravellers() {
         Node node = head;
         while (node != null) {
-            if (node.value instanceof StaffEmployee & ((StaffEmployee) node.value).getTravelsQuantity() > 0)
+            if (node.value instanceof StaffEmployee)
+                if (isTraveller(node))
                 node.value.setBonus(node.value.getSalary() / 2);
             node = node.next;
         }

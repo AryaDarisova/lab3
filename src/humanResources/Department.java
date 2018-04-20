@@ -287,10 +287,49 @@ public class Department implements EmployeeGroup{
      */
 
     @Override
+    public int travellers() {
+        int travellers = 0;
+        for (int i = 0; i < size; i++) {
+            if (employees[i] instanceof StaffEmployee)
+                if (((StaffEmployee) employees[i]).getTravelsQuantity() > 0) {
+                travellers++;
+            }
+        }
+        return travellers;
+    }
+
+    @Override
+    public Employee[] businessTravellers() {
+        int k = 0;
+        Employee[] businessTravellers = new Employee[travellers()];
+        for (Employee x : employees) {
+            if (x instanceof StaffEmployee) {
+                if (isTraveller(x))
+                    businessTravellers[k++] = x;
+            }
+        }
+        return businessTravellers;
+    }
+
+    /*
+    - проверяется количество командировок
+     */
+
+    public boolean isTraveller(Employee x) {
+        return ((StaffEmployee) x).getTravelsQuantity() > 0;
+    }
+
+    /*
+    - устанавливает бонус в половину зарплаты
+     */
+
+    @Override
     public void bonusForBusinessTravellers() {
         for (Employee x: employees) {
-            if (x instanceof StaffEmployee & ((StaffEmployee) x).getTravelsQuantity() > 0)
+            if (x instanceof StaffEmployee)
+                if (((StaffEmployee) x).getTravelsQuantity() > 0) {
                 x.setBonus(x.getSalary() / 2);
+            }
         }
     }
 
