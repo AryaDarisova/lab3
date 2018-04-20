@@ -144,7 +144,7 @@ public class ProjectManager implements GroupsManager{
 
         if (size !=0) {
             for (int i = 0; i < size; i++) {
-                employeesQuantity += node.value.getEmployees(jobTitle).length; //TODO OH NO! не создавай массив, создай метод, возваращющий число сотрудникоа с заданной должностью вынеси его в интерфейс
+                employeesQuantity += node.value.getEmployeesQuantity(jobTitle); //TODO OH NO! не создавай массив, создай метод, возваращющий число сотрудникоа с заданной должностью вынеси его в интерфейс
                 node = node.next;
             }
             return employeesQuantity;
