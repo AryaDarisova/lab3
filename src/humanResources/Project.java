@@ -275,28 +275,12 @@ public class Project implements EmployeeGroup{
      */
 
     @Override
-    public int travellers() {
-        int travellers = 0;
+    public void bonusForBusinessTravellers() {
         Node node = head;
         while (node != null) {
-            if (node.value instanceof StaffEmployee & ((StaffEmployee) node.value).getTravelsQuantity() > 0) {
-                travellers++;
-            }
-            node = node.next;
-        }
-        return travellers;
-    }
-
-    @Override
-    public Employee[] businessTravellers() {
-        Node node = head;
-        int k = 0;
-        Employee[] businessTravellers = new Employee[travellers()];
-        while (node != null){
             if (node.value instanceof StaffEmployee & ((StaffEmployee) node.value).getTravelsQuantity() > 0)
-            businessTravellers[k++] = node.value;
+                node.value.setBonus(node.value.getSalary() / 2);
             node = node.next;
         }
-        return businessTravellers;
     }
 }

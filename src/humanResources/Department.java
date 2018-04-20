@@ -287,27 +287,11 @@ public class Department implements EmployeeGroup{
      */
 
     @Override
-    public int travellers() {
-        int travellers = 0;
-        for (int i = 0; i < size; i++) {
-            if (employees[i] instanceof StaffEmployee & ((StaffEmployee) employees[i]).getTravelsQuantity() > 0) {
-                travellers++;
-            }
-        }
-        return travellers;
-    }
-
-    @Override
-    public Employee[] businessTravellers() {
-        int k = 0;
-        Employee[] businessTravellers = new Employee[travellers()];
+    public void bonusForBusinessTravellers() {
         for (Employee x: employees) {
-            if (x instanceof StaffEmployee) {
-                if (((StaffEmployee) x).getTravelsQuantity() > 0)
-                businessTravellers[k++] = x;
-            }
+            if (x instanceof StaffEmployee & ((StaffEmployee) x).getTravelsQuantity() > 0)
+                x.setBonus(x.getSalary() / 2);
         }
-        return businessTravellers;
     }
 
     @Override

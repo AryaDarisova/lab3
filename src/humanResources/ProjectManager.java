@@ -221,8 +221,7 @@ public class ProjectManager implements GroupsManager{
     public void setBonus(){
         ProjectsNode node = head;
         while (node != null) {
-            for (Employee x: node.value.businessTravellers())
-                x.setBonus(x.getSalary() / 2);
+            node.value.bonusForBusinessTravellers();
             node = node.next;
         }
     }
